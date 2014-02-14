@@ -18,7 +18,8 @@ rantgalitz氏の[JS-Image-Resizer][]
 
 JS-Image-Filters-ddnは、JavaScriptで書かれた画像の明度・彩度を変更するライブラリです。  
 
-Live Demo (Github pages):  
+##Live Demo (Github pages)
+
 [JS-Image-Filters-ddn][]  
 
 
