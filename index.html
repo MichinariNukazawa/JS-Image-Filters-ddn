@@ -1,0 +1,154 @@
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>JavaScript Image filters ddn</title>
+
+	<script src="./brightness.js"></script>
+	<script src="./hsv.js"></script>
+	<script src="./chroma.js"></script>
+	<LINK href="style.css" rel="stylesheet" type="text/css">
+
+	<script>
+		var image;
+		window.onload = function(){
+			image = new Image();
+			image.onload = function(){process_data()};
+			image.src = "default_200x200.jpg";
+		}
+
+		function process_data(){
+			var h_brightness_canvas, h_brightness_ctx;
+			var h_chroma_canvas, h_chroma_ctx;
+
+			// canvas(source_canvas)
+			var h_src_canvas = document.getElementById('source_canvas');
+			var h_src_ctx = h_src_canvas.getContext('2d');
+			h_src_ctx.drawImage(image, 0, 0, image.width, image.height);
+
+			// brightness_canvas
+			var dataToBrightness = h_src_ctx.getImageData(0, 0, image.width, image.height).data;
+
+			// value = -100
+			var h_brightness_canvas_m100 = document.getElementById('brightness_canvas_-100');
+			var h_brightness_ctx_m100 = h_brightness_canvas_m100.getContext('2d');
+			var brightness_m100 = new Brightness(image.width, image.height, true, '', -100, true,
+				function(buffer){
+					updateCanvas(h_brightness_ctx_m100, h_brightness_ctx_m100.createImageData(image.width, image.height), buffer);
+				});
+			brightness_m100.brightness(dataToBrightness);
+
+			// value = -50 ~ +100
+			var values = new Array( '-50', '0', '+50', '+100');
+			var h_brightness_canvas, h_brightness_ctx;
+			var obj_brightness;
+			var value;
+			for (var i = 0; i < values.length; i++){
+				value = values[i];
+				h_brightness_canvas = document.getElementById('brightness_canvas_' + value);
+				h_brightness_ctx = h_brightness_canvas.getContext('2d');
+				obj_brightness = new Brightness(image.width, image.height, true, '', 0, true,
+				function(buffer){
+					updateCanvas(h_brightness_ctx, h_brightness_ctx.createImageData(image.width, image.height), buffer);
+				});
+				obj_brightness.brightness(dataToBrightness, parseInt(value));
+			}
+
+			// chroma_canvas
+			var dataToChroma = h_src_ctx.getImageData(0, 0, image.width, image.height).data;
+
+			// value = -100
+			var h_chroma_canvas_m100 = document.getElementById('chroma_canvas_-100');
+			var h_chroma_ctx_m100 = h_chroma_canvas_m100.getContext('2d');
+			var chroma_m100 = new Chroma(image.width, image.height, true, '', -100, true,
+				function(buffer){
+					updateCanvas(h_chroma_ctx_m100, h_chroma_ctx_m100.createImageData(image.width, image.height), buffer);
+				});
+			chroma_m100.chroma(dataToChroma);
+
+			// value = -50 ~ +100
+			var values = new Array( '-50', '0', '+50', '+100');
+			var h_chroma_canvas, h_chroma_ctx;
+			var obj_chroma;
+			var value;
+			for (var i = 0; i < values.length; i++){
+				value = values[i];
+				h_chroma_canvas = document.getElementById('chroma_canvas_' + value);
+				h_chroma_ctx = h_chroma_canvas.getContext('2d');
+				obj_chroma = new Chroma(image.width, image.height, true, '', 0, true,
+				function(buffer){
+					updateCanvas(h_chroma_ctx, h_chroma_ctx.createImageData(image.width, image.height), buffer);
+				});
+				obj_chroma.chroma(dataToChroma, parseInt(value));
+			}
+			console.log("exit");
+		}
+
+		// buffer writing canvas.
+		function updateCanvas(contextHandlePassed, imageBuffer, frameBuffer) {
+			var data = imageBuffer.data;
+			var length = data.length;
+			for (var x = 0; x < length; ++x) {
+				data[x] = frameBuffer[x] & 0xFF;
+			}
+			contextHandlePassed.putImageData(imageBuffer, 0, 0);
+		}
+	</script>
+
+</head>
+<body>
+	<h1>JavaScript Image filters "ddn"</h1>
+	<h2>Source Image</h2>
+	<canvas id="source_canvas" width="200" height="200"></canvas>
+	<br />
+	<br />
+
+	<h2>Brightness Image</h2>
+	<div style="float: left">
+		-100<br />
+		<canvas id="brightness_canvas_-100" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		-50<br />
+		<canvas id="brightness_canvas_-50" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+-0<br />
+		<canvas id="brightness_canvas_0" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+50<br />
+		<canvas id="brightness_canvas_+50" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+100<br />
+		<canvas id="brightness_canvas_+100" width="200" height="200"></canvas>
+	</div>
+	<div style="clear: both">
+	<br />
+
+	<h2>Chroma Image</h2>
+	<div style="float: left">
+		-100<br />
+		<canvas id="chroma_canvas_-100" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		-50<br />
+		<canvas id="chroma_canvas_-50" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+-0<br />
+		<canvas id="chroma_canvas_0" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+50<br />
+		<canvas id="chroma_canvas_+50" width="200" height="200"></canvas>
+	</div>
+	<div style="float: left">
+		+100<br />
+		<canvas id="chroma_canvas_+100" width="200" height="200"></canvas>
+	</div>
+	<div style="clear: both">
+	<br />
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+@charset "utf-8";
+
+	body{
+		background-color: #eeeeee;
+		color: #0f0f0f;
+	}
+
+	h1{
+		margin: 6px;
+		margin-top: 10px;
+	}
+
+	h2{
+		margin: 4px;
+	}
+
+	canvas{
+		border:2px black solid;
+	}
+
+	.text{
+		font-size: 80%;
+	}
