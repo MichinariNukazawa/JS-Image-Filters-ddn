@@ -1,13 +1,16 @@
 JS-Image-Filters-ddn
 ====================
 
+##About
+
 Using Base system and imitated interface from  
 [JS-Image-Resizer][]  
   
 A change brightness and chroma for images written in JavaScript.  
   
   
-for Japanese:  
+##概要(About for Japanese)
+
 JS-Image-Filters-ddnは、  
 rantgalitz氏の[JS-Image-Resizer][]  
 を基礎部分に使用しました。  
