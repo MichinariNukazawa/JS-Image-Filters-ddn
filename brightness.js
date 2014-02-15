@@ -24,7 +24,6 @@ Brightness.prototype.initialize = function () {
 	}
 }
 Brightness.prototype.configureWorker = function () {
-	console.log('configureWorker');
 	// worker not inplement.
 	this.useWebWorker = false;
 }
@@ -36,7 +35,6 @@ Brightness.prototype.configurePasses = function () {
 	else{
 		this.brightness_func = (this.colorChannels == 4) ? this.brightnessSimpleRGBA : this.brightnessSimpleRGB;
 	}
-	console.log('configpasses brightness');
 }
 Brightness.prototype.brightness = function (buffer, value){
 	if (typeof value === "undefined"){
